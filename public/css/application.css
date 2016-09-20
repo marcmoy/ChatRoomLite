@@ -1,7 +1,18 @@
+.body {
+  font-family: 'Lato', sans-serif;
+}
+
+.shadow {
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;
+}
+
 #userFormArea {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
   height: 100vh;
   background-color: #eee;
 }
@@ -11,7 +22,7 @@
   margin: auto;
   background-color: white;
   border-radius: 2rem;
-  padding: 5rem;
+  padding: 2rem 4rem;
 }
 
 @media screen and (max-width: 420px) {
@@ -22,6 +33,7 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    font-size: 2rem;
   }
 
   .avatar-slider-container {
@@ -31,20 +43,20 @@
 
 #avatar {
   border-radius: 50%;
-  height: 10rem;
-  width: 10rem;
+  height: 8rem;
+  width: 8rem;
   cursor: pointer;
 }
 
 button.slick-arrow.slick-next, button.slick-arrow.slick-prev {
   background-color: #ccc;
   border-radius: 50%;
-  height: 20px;
-  width: 20px;
+  height: 40px;
+  width: 40px;
 }
 
-button.slick-arrow:hover {
-  background-color: blue;
+.slick-next:before, .slick-prev:before {
+  font-size: 40px;
 }
 
 .slick-initialized .slick-slide {
@@ -66,18 +78,40 @@ button.slick-arrow:hover {
   border: 4px solid #ff8f00;
 }
 
-#username-error {
-  display: none;
-}
-
-#avatar-error {
-  display: none;
-}
-
 .error {
   color: red;
+  height: 2rem;
+  margin: 1rem 0;
+}
+
+.error > span {
+  background-color: pink;
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  font-size: 1.2rem;
+}
+
+@media screen and (min-width: 420px) {
+  .error {
+    margin: 3rem;
+  }
+}
+
+#userForm > div > input.btn.btn-primary {
+  font-size: 20px;
+  width: 10rem;
+  margin: 2rem 0;
 }
 
 #messageArea {
-  padding: 30px;
+  margin: 20px;
+}
+
+.avatar-slider-container {
+  display: block;
+  margin: 20px;
+}
+
+ul.slick-dots {
+  font-family: slick;
 }

@@ -13,10 +13,16 @@ class Login extends React.Component {
 
   setUsername(e){
     this.setState({ username: e.target.value });
+    if (e.target.value.includes(' ')) {
+      $('#username-error').html("<span>Username can't have spaces.</span>");
+    } else {
+      $('#username-error').html('<br>');
+    }
   }
 
   setAvatar(e){
     this.setState({ avatar: e.target.value });
+    $('#avatar-error').html('<br>');
   }
 
   handleSubmit(e) {
@@ -25,33 +31,42 @@ class Login extends React.Component {
 
     if (this.state.username.includes(' ') || this.state.username.length === 0) {
       valid = false;
-      $('#username-error').show();
+      $('#username-error').html(
+        "<span>Username can't be blank or have spaces.</span>"
+      );
       $('#enter-username').addClass('animated shake');
       window.setTimeout(() => (
         $('#enter-username').removeClass('animated shake')
       ), 1000);
     } else {
-      $('#username-error').hide();
+      $('#username-error').html('<br>');
     }
 
     if (this.state.avatar === ''){
       valid = false;
-      $('#avatar-error').show();
+      $('#avatar-error').html('<span>Must select an avatar.</span>');
       $('#select-avatar').addClass('animated shake');
       window.setTimeout(() => (
         $('#select-avatar').removeClass('animated shake')
       ), 1000);
     } else {
-      $('#avatar-error').hide();
+      $('#avatar-error').html('<br>');
     }
 
-    if (valid) this.props.closeLogin();
+    if (valid) {
+      $('#userForm').removeClass('bounceInDown');
+      $('#userForm').addClass('bounceOutUp');
+      window.setTimeout(() => (
+        this.props.closeLogin()
+      ), 1000);
+    }
   }
 
   render() {
     return(
       <div id='userFormArea' onSubmit={this.handleSubmit}>
-        <form id='userForm' className='text-center animated bounceInDown'>
+        <form id='userForm'
+            className='text-center animated bounceInDown shadow'>
           <h1>Welcome to ChatRoomLite!</h1>
           <div id='enter-username' className='form-group'>
             <h3>Enter a Username</h3>
@@ -59,18 +74,13 @@ class Login extends React.Component {
               className='form-control text-center'
               onChange={this.setUsername}
               id='username' />
-            <div id='username-error' className='error'>
-              Username can't be blank or container spaces.
-            </div>
+            <div id='username-error' className='error'><br/></div>
           </div>
           <div id='select-avatar' className='form-group'>
-            <br/>
             <Avatars setAvatar={this.setAvatar} />
-            <br/>
-            <br/>
-            <div id='avatar-error' className='error'>
-              Need to select an avatar.
-            </div>
+            <div id='avatar-error' className='error'><br/></div>
+          </div>
+          <div className='form-group'>
             <input type='submit' className='btn btn-primary' value='Login' />
           </div>
         </form>

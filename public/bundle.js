@@ -21559,41 +21559,55 @@
 	    key: 'setUsername',
 	    value: function setUsername(e) {
 	      this.setState({ username: e.target.value });
+	      if (e.target.value.includes(' ')) {
+	        (0, _jquery2.default)('#username-error').html("<span>Username can't have spaces.</span>");
+	      } else {
+	        (0, _jquery2.default)('#username-error').html('<br>');
+	      }
 	    }
 	  }, {
 	    key: 'setAvatar',
 	    value: function setAvatar(e) {
 	      this.setState({ avatar: e.target.value });
+	      (0, _jquery2.default)('#avatar-error').html('<br>');
 	    }
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
+	      var _this2 = this;
+	
 	      e.preventDefault();
 	      var valid = true;
 	
 	      if (this.state.username.includes(' ') || this.state.username.length === 0) {
 	        valid = false;
-	        (0, _jquery2.default)('#username-error').show();
+	        (0, _jquery2.default)('#username-error').html("<span>Username can't be blank or have spaces.</span>");
 	        (0, _jquery2.default)('#enter-username').addClass('animated shake');
 	        window.setTimeout(function () {
 	          return (0, _jquery2.default)('#enter-username').removeClass('animated shake');
 	        }, 1000);
 	      } else {
-	        (0, _jquery2.default)('#username-error').hide();
+	        (0, _jquery2.default)('#username-error').html('<br>');
 	      }
 	
 	      if (this.state.avatar === '') {
 	        valid = false;
-	        (0, _jquery2.default)('#avatar-error').show();
+	        (0, _jquery2.default)('#avatar-error').html('<span>Must select an avatar.</span>');
 	        (0, _jquery2.default)('#select-avatar').addClass('animated shake');
 	        window.setTimeout(function () {
 	          return (0, _jquery2.default)('#select-avatar').removeClass('animated shake');
 	        }, 1000);
 	      } else {
-	        (0, _jquery2.default)('#avatar-error').hide();
+	        (0, _jquery2.default)('#avatar-error').html('<br>');
 	      }
 	
-	      if (valid) this.props.closeLogin();
+	      if (valid) {
+	        (0, _jquery2.default)('#userForm').removeClass('bounceInDown');
+	        (0, _jquery2.default)('#userForm').addClass('bounceOutUp');
+	        window.setTimeout(function () {
+	          return _this2.props.closeLogin();
+	        }, 1000);
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -21603,7 +21617,8 @@
 	        { id: 'userFormArea', onSubmit: this.handleSubmit },
 	        _react2.default.createElement(
 	          'form',
-	          { id: 'userForm', className: 'text-center animated bounceInDown' },
+	          { id: 'userForm',
+	            className: 'text-center animated bounceInDown shadow' },
 	          _react2.default.createElement(
 	            'h1',
 	            null,
@@ -21624,21 +21639,22 @@
 	            _react2.default.createElement(
 	              'div',
 	              { id: 'username-error', className: 'error' },
-	              'Username can\'t be blank or container spaces.'
+	              _react2.default.createElement('br', null)
 	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
 	            { id: 'select-avatar', className: 'form-group' },
-	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(_avatars2.default, { setAvatar: this.setAvatar }),
-	            _react2.default.createElement('br', null),
-	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(
 	              'div',
 	              { id: 'avatar-error', className: 'error' },
-	              'Need to select an avatar.'
-	            ),
+	              _react2.default.createElement('br', null)
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form-group' },
 	            _react2.default.createElement('input', { type: 'submit', className: 'btn btn-primary', value: 'Login' })
 	          )
 	        )
@@ -21726,7 +21742,7 @@
 	
 	  return _react2.default.createElement(
 	    'div',
-	    { 'class': 'avatar-slider-container' },
+	    { className: 'avatar-slider-container' },
 	    _react2.default.createElement(
 	      'h3',
 	      null,

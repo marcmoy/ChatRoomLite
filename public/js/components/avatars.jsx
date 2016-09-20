@@ -54,7 +54,7 @@ const Avatars = ({ setAvatar }) => {
   };
 
   return(
-    <div class='avatar-slider-container'>
+    <div className='avatar-slider-container'>
       <h3>Select an Avatar</h3>
       <br/>
       <Slider {...settings}>
