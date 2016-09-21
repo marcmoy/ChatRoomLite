@@ -20,9 +20,9 @@ class Login extends React.Component {
     }
   }
 
-  setAvatar(e){
-    this.setState({ avatar: e.target.value });
-    $('#avatar-error').html('<br>');
+  setAvatar(avatar){
+    console.log(avatar);
+    this.setState({ avatar: avatar });
   }
 
   handleSubmit(e) {
@@ -69,16 +69,14 @@ class Login extends React.Component {
             className='text-center animated bounceInDown shadow'>
           <h1>Welcome to ChatRoomLite!</h1>
           <div id='enter-username' className='form-group'>
-            <h3>Enter a Username</h3>
             <input
-              className='form-control text-center'
+              className='form-control text-center username-input'
+              placeholder='Enter a username'
               onChange={this.setUsername}
               id='username' />
-            <div id='username-error' className='error'><br/></div>
           </div>
           <div id='select-avatar' className='form-group'>
             <Avatars setAvatar={this.setAvatar} />
-            <div id='avatar-error' className='error'><br/></div>
           </div>
           <div className='form-group'>
             <input type='submit' className='btn btn-primary' value='Login' />

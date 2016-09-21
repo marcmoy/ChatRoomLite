@@ -18,11 +18,27 @@
 }
 
 #userForm {
-  width: 70%;
+  position: relative;
+  width: 40%;
   margin: auto;
   background-color: white;
   border-radius: 2rem;
   padding: 2rem 4rem;
+  height: 50vh;
+  white-space: nowrap;
+  text-align: center;
+  justify-content: center;
+}
+
+#userForm > h1 {
+  font-size: 4rem;
+  position: absolute;
+  margin-left: -100%;
+  margin-right: -100%;
+  left: 0;
+  right: 0;
+  top: -15vh;
+  text-align: center;
 }
 
 @media screen and (max-width: 420px) {
@@ -74,22 +90,18 @@ button.slick-arrow.slick-next, button.slick-arrow.slick-prev {
   border: 2px solid transparent;
 }
 
-.avatar-option > label > input:checked + img {
-  border: 4px solid #ff8f00;
-}
-
 .error {
   color: red;
   height: 2rem;
   margin: 1rem 0;
 }
 
-.error > span {
-  background-color: pink;
-  border-radius: 0.5rem;
-  padding: 0.8rem;
-  font-size: 1.2rem;
-}
+  .error > span {
+    background-color: pink;
+    border-radius: 0.5rem;
+    padding: 0.8rem;
+    font-size: 1.2rem;
+  }
 
 @media screen and (min-width: 420px) {
   .error {
@@ -98,7 +110,7 @@ button.slick-arrow.slick-next, button.slick-arrow.slick-prev {
 }
 
 #userForm > div > input.btn.btn-primary {
-  font-size: 20px;
+  font-size: 14px;
   width: 10rem;
   margin: 2rem 0;
 }
@@ -114,4 +126,13 @@ button.slick-arrow.slick-next, button.slick-arrow.slick-prev {
 
 ul.slick-dots {
   font-family: slick;
+}
+
+#enter-username {
+  text-align: center;
+}
+
+.username-input {
+  width: 50%;
+  margin: auto;
 }

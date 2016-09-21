@@ -21567,9 +21567,9 @@
 	    }
 	  }, {
 	    key: 'setAvatar',
-	    value: function setAvatar(e) {
-	      this.setState({ avatar: e.target.value });
-	      (0, _jquery2.default)('#avatar-error').html('<br>');
+	    value: function setAvatar(avatar) {
+	      console.log(avatar);
+	      this.setState({ avatar: avatar });
 	    }
 	  }, {
 	    key: 'handleSubmit',
@@ -21627,30 +21627,16 @@
 	          _react2.default.createElement(
 	            'div',
 	            { id: 'enter-username', className: 'form-group' },
-	            _react2.default.createElement(
-	              'h3',
-	              null,
-	              'Enter a Username'
-	            ),
 	            _react2.default.createElement('input', {
-	              className: 'form-control text-center',
+	              className: 'form-control text-center username-input',
+	              placeholder: 'Enter a username',
 	              onChange: this.setUsername,
-	              id: 'username' }),
-	            _react2.default.createElement(
-	              'div',
-	              { id: 'username-error', className: 'error' },
-	              _react2.default.createElement('br', null)
-	            )
+	              id: 'username' })
 	          ),
 	          _react2.default.createElement(
 	            'div',
 	            { id: 'select-avatar', className: 'form-group' },
-	            _react2.default.createElement(_avatars2.default, { setAvatar: this.setAvatar }),
-	            _react2.default.createElement(
-	              'div',
-	              { id: 'avatar-error', className: 'error' },
-	              _react2.default.createElement('br', null)
-	            )
+	            _react2.default.createElement(_avatars2.default, { setAvatar: this.setAvatar })
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -21677,6 +21663,8 @@
 	  value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -21685,79 +21673,124 @@
 	
 	var _reactSlick2 = _interopRequireDefault(_reactSlick);
 	
+	var _jquery = __webpack_require__(192);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var avatars = ['captain_falcon', 'dk', 'fox', 'kirby', 'link', 'mario', 'megaman', 'metaknight', 'peach', 'pikachu', 'pit', 'samus', 'snake', 'sonic', 'yoshi'];
 	
-	var Avatars = function Avatars(_ref) {
-	  var setAvatar = _ref.setAvatar;
+	var Avatars = function (_React$Component) {
+	  _inherits(Avatars, _React$Component);
 	
+	  function Avatars(props) {
+	    _classCallCheck(this, Avatars);
 	
-	  var options = avatars.map(function (avatar) {
-	    var src = '/assets/avatars/' + avatar + '.png';
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'avatar-option', key: avatar },
-	      _react2.default.createElement(
-	        'label',
-	        null,
-	        _react2.default.createElement('input', { type: 'radio', name: 'avatar',
-	          value: avatar, onChange: setAvatar }),
-	        _react2.default.createElement('img', { id: 'avatar', src: src })
-	      )
-	    );
-	  });
+	    var _this = _possibleConstructorReturn(this, (Avatars.__proto__ || Object.getPrototypeOf(Avatars)).call(this, props));
 	
-	  var settings = {
-	    dots: true,
-	    infinite: true,
-	    speed: 500,
-	    slidesToShow: 5,
-	    slidesToScroll: 5,
-	    initialSlide: 0,
-	    responsive: [{
-	      breakpoint: 1024,
-	      settings: {
-	        slidesToShow: 3,
-	        slidesToScroll: 3,
-	        infinite: true,
-	        dots: true
-	      }
-	    }, {
-	      breakpoint: 600,
-	      settings: {
-	        slidesToShow: 3,
-	        slidesToScroll: 3,
-	        initialSlide: 3
-	      }
-	    }, {
-	      breakpoint: 480,
-	      settings: {
-	        dots: false,
-	        slidesToShow: 1,
-	        slidesToScroll: 1
-	      }
-	    }]
-	  };
+	    _this.radioButtons = _this.radioButtons.bind(_this);
+	    return _this;
+	  }
 	
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'avatar-slider-container' },
-	    _react2.default.createElement(
-	      'h3',
-	      null,
-	      'Select an Avatar'
-	    ),
-	    _react2.default.createElement('br', null),
-	    _react2.default.createElement(
-	      _reactSlick2.default,
-	      settings,
-	      options
-	    )
-	  );
-	};
+	  _createClass(Avatars, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      var avatar = (0, _jquery2.default)('div.slick-slide.slick-active.avatar-option').find('input')[0].value;
+	      this.props.setAvatar(avatar);
+	
+	      (0, _jquery2.default)('button').on('click', function () {
+	        window.setTimeout(function () {
+	          var av = (0, _jquery2.default)('div.slick-slide.slick-active.avatar-option').find('input')[0].value;
+	          _this2.props.setAvatar(av);
+	        }, 500);
+	      });
+	    }
+	  }, {
+	    key: 'radioButtons',
+	    value: function radioButtons() {
+	      var _this3 = this;
+	
+	      var options = avatars.map(function (avatar, i) {
+	        var src = '/assets/avatars/' + avatar + '.png';
+	        var id = 'avatar' + i;
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'avatar-option', key: avatar },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            _react2.default.createElement('input', { type: 'radio', name: 'avatar', id: id,
+	              value: avatar, onChange: _this3.props.setAvatar }),
+	            _react2.default.createElement('img', { id: 'avatar', src: src })
+	          )
+	        );
+	      });
+	
+	      return options;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'avatar-slider-container' },
+	        _react2.default.createElement(
+	          'h3',
+	          null,
+	          'Select an Avatar'
+	        ),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(
+	          _reactSlick2.default,
+	          settings,
+	          this.radioButtons()
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Avatars;
+	}(_react2.default.Component);
 	
 	exports.default = Avatars;
+	
+	
+	var settings = {
+	  dots: false,
+	  infinite: true,
+	  speed: 500,
+	  slidesToShow: 1,
+	  slidesToScroll: 1,
+	  initialSlide: 7,
+	  responsive: [{
+	    breakpoint: 1024,
+	    settings: {
+	      slidesToShow: 1,
+	      slidesToScroll: 1
+	    }
+	  }, {
+	    breakpoint: 600,
+	    settings: {
+	      slidesToShow: 3,
+	      slidesToScroll: 1
+	    }
+	  }, {
+	    breakpoint: 480,
+	    settings: {
+	      slidesToShow: 1,
+	      slidesToScroll: 1
+	    }
+	  }]
+	};
 
 /***/ },
 /* 175 */
