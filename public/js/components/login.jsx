@@ -21,6 +21,7 @@ class Login extends React.Component {
   }
 
   setAvatar(avatar){
+    this.props.updateCurrentUser(this.state);
     this.setState({ avatar: avatar });
   }
 
@@ -53,6 +54,8 @@ class Login extends React.Component {
     }
 
     if (valid) {
+      debugger;
+      this.props.updateCurrentUser(this.state);
       this.props.socket.emit('new user', this.state, data => {
         if (data) {
           $('#userForm').removeClass('bounceInDown');

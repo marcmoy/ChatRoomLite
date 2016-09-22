@@ -36,8 +36,8 @@ class Chat extends React.Component {
     });
 
     return(
-      <div className="well" id="online-users">
-        <h3>Online Users</h3>
+      <div id="online-users">
+        <h5>Online Users</h5>
         <ul className="list-group" id="users">
           {users}
         </ul>
@@ -59,24 +59,20 @@ class Chat extends React.Component {
 
   render() {
     return(
-      <div className="row" id="messageArea">
-        <div className="col-md-4">
+      <div id="messageArea">
+        <div className="left-side">
           {this.onlineUsers()}
         </div>
-        <div className="col-md-8">
-          <ChatWindow socket={this.props.socket} />
+        <div className="chat-container">
+          <ChatWindow socket={this.props.socket}
+            currentUser={this.props.currentUser}/>
 
-          <form id="messageForm" onSubmit={this.sendMessage}>
+          <form id="message-form" className='form-inline chat'
+            onSubmit={this.sendMessage}>
             <div className="form-group">
-              <label>Enter message</label>
-              <textarea className="form-control"
+              <input className="form-control" placeholder='Enter message'
                 id="message" onChange={this.updateMessage}
-                value={this.state.message}></textarea>
-              <br/>
-              <input
-                type="submit"
-                className="btn btn-primary"
-                value="Send Message" />
+                value={this.state.message}></input>
             </div>
           </form>
         </div>

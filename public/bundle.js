@@ -21472,8 +21472,9 @@
 	
 	    var _this = _possibleConstructorReturn(this, (ChatApp.__proto__ || Object.getPrototypeOf(ChatApp)).call(this, props));
 	
-	    _this.state = { login: false };
+	    _this.state = { login: false, currentUser: null };
 	    _this.closeLogin = _this.closeLogin.bind(_this);
+	    _this.updateCurrentUser = _this.updateCurrentUser.bind(_this);
 	    _this.view = _this.view.bind(_this);
 	    return _this;
 	  }
@@ -21482,6 +21483,11 @@
 	    key: 'closeLogin',
 	    value: function closeLogin() {
 	      this.setState({ login: true });
+	    }
+	  }, {
+	    key: 'updateCurrentUser',
+	    value: function updateCurrentUser(user) {
+	      this.setState({ currentUser: user });
 	    }
 	  }, {
 	    key: 'view',
@@ -21501,8 +21507,10 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_login2.default, { closeLogin: this.closeLogin, socket: this.props.socket }),
-	        _react2.default.createElement(_chat2.default, { socket: this.props.socket })
+	        _react2.default.createElement(_login2.default, { closeLogin: this.closeLogin, socket: this.props.socket,
+	          updateCurrentUser: this.updateCurrentUser }),
+	        _react2.default.createElement(_chat2.default, { socket: this.props.socket, user: this.props.user,
+	          currentUser: this.state.currentUser })
 	      );
 	    }
 	  }]);
@@ -21572,6 +21580,7 @@
 	  }, {
 	    key: 'setAvatar',
 	    value: function setAvatar(avatar) {
+	      this.props.updateCurrentUser(this.state);
 	      this.setState({ avatar: avatar });
 	    }
 	  }, {
@@ -21605,6 +21614,8 @@
 	      }
 	
 	      if (valid) {
+	        debugger;
+	        this.props.updateCurrentUser(this.state);
 	        this.props.socket.emit('new user', this.state, function (data) {
 	          if (data) {
 	            (0, _jquery2.default)('#userForm').removeClass('bounceInDown');
@@ -51079,9 +51090,9 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'well', id: 'online-users' },
+	        { id: 'online-users' },
 	        _react2.default.createElement(
-	          'h3',
+	          'h5',
 	          null,
 	          'Online Users'
 	        ),
@@ -51111,35 +51122,27 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'row', id: 'messageArea' },
+	        { id: 'messageArea' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'col-md-4' },
+	          { className: 'left-side' },
 	          this.onlineUsers()
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'col-md-8' },
-	          _react2.default.createElement(_chat_window2.default, { socket: this.props.socket }),
+	          { className: 'chat-container' },
+	          _react2.default.createElement(_chat_window2.default, { socket: this.props.socket,
+	            currentUser: this.props.currentUser }),
 	          _react2.default.createElement(
 	            'form',
-	            { id: 'messageForm', onSubmit: this.sendMessage },
+	            { id: 'message-form', className: 'form-inline chat',
+	              onSubmit: this.sendMessage },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'form-group' },
-	              _react2.default.createElement(
-	                'label',
-	                null,
-	                'Enter message'
-	              ),
-	              _react2.default.createElement('textarea', { className: 'form-control',
+	              _react2.default.createElement('input', { className: 'form-control', placeholder: 'Enter message',
 	                id: 'message', onChange: this.updateMessage,
-	                value: this.state.message }),
-	              _react2.default.createElement('br', null),
-	              _react2.default.createElement('input', {
-	                type: 'submit',
-	                className: 'btn btn-primary',
-	                value: 'Send Message' })
+	                value: this.state.message })
 	            )
 	          )
 	        )
@@ -51168,6 +51171,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _jquery = __webpack_require__(192);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51185,6 +51192,7 @@
 	    var _this = _possibleConstructorReturn(this, (ChatWindow.__proto__ || Object.getPrototypeOf(ChatWindow)).call(this, props));
 	
 	    _this.state = { messages: [] };
+	    _this.messages = _this.messages.bind(_this);
 	    return _this;
 	  }
 	
@@ -51195,42 +51203,76 @@
 	
 	      this.props.socket.emit('fetch messages', function (messages) {
 	        _this2.setState({ messages: messages });
+	        _this2.scrollToBottom();
 	      });
 	
 	      this.props.socket.on('receive messages', function (messages) {
 	        _this2.setState({ messages: messages });
+	        _this2.scrollToBottom();
 	      });
 	    }
 	  }, {
-	    key: 'render',
-	    value: function render() {
+	    key: 'scrollToBottom',
+	    value: function scrollToBottom() {
+	      (0, _jquery2.default)('#chat').animate({ scrollTop: (0, _jquery2.default)('#chat').prop("scrollHeight") }, 500);
+	    }
+	  }, {
+	    key: 'messages',
+	    value: function messages() {
+	      var currentUser = this.props.currentUser;
 	      var messages = this.state.messages.map(function (message, i) {
+	
+	        var bubbleClass = 'speech-bubble';
+	        var messageClass = 'message animated fadeInLeft';
+	        var userClass = 'message-avatar-username';
+	        if (message.user) {
+	          if (currentUser.username === message.user.username) {
+	            bubbleClass = 'speech-bubble-owner';
+	            messageClass = 'message-owner animated fadeInRight';
+	            userClass = 'message-avatar-username-owner';
+	          }
+	        }
+	
 	        var src = void 0,
 	            avatar = void 0;
 	        if (message.user) {
 	          src = '/assets/avatars/' + message.user.avatar + '.png';
 	          avatar = _react2.default.createElement(
-	            'span',
-	            null,
-	            _react2.default.createElement('img', { src: src, id: 'avatar' }),
-	            message.user.username
+	            'div',
+	            { className: userClass },
+	            _react2.default.createElement('img', { src: src, id: 'avatar-chat' }),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              message.user.username
+	            )
 	          );
 	        }
+	
 	        return _react2.default.createElement(
 	          'li',
-	          { className: 'message', key: i },
-	          avatar,
-	          message.text
+	          { className: messageClass, key: i },
+	          _react2.default.createElement(
+	            'div',
+	            { className: bubbleClass },
+	            message.text
+	          ),
+	          avatar
 	        );
 	      });
 	
+	      return messages;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'chat', id: 'chat' },
+	        { className: 'chat-window', id: 'chat' },
 	        _react2.default.createElement(
 	          'ul',
 	          null,
-	          messages
+	          this.messages()
 	        )
 	      );
 	    }
