@@ -300,6 +300,10 @@ ul#users > li > img#avatar {
     max-width: 80%;
     margin: 2rem 0;
   }
+
+  .speech-bubble-owner {
+    right: 1rem;
+  }
 }
 
 #message-form {
