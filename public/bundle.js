@@ -21614,7 +21614,6 @@
 	      }
 	
 	      if (valid) {
-	        debugger;
 	        this.props.updateCurrentUser(this.state);
 	        this.props.socket.emit('new user', this.state, function (data) {
 	          if (data) {
