@@ -220,8 +220,8 @@ ul#users > li > img#avatar {
 }
 
 .speech-bubble {
-  margin: 3rem;
   padding: 1rem;
+  margin: 1.5rem 0;
   border-radius: 1rem;
   border: 1px solid #eee;
   position: relative;
@@ -252,14 +252,15 @@ ul#users > li > img#avatar {
 }
 
 .speech-bubble-owner {
-  margin: 3rem;
   padding: 1rem;
+  margin: 1.5rem 0;
   border-radius: 1rem;
-  border: 1px solid blue;
+  border: 1px solid #1589fd;
   position: relative;
   display: inline-block;
   min-width: 10%;
-  background-color: blue;
+  background-color: #1589fd;
+  color: white;
   margin-bottom: 1rem;
   text-align: left;
 }
@@ -272,6 +273,12 @@ ul#users > li > img#avatar {
   border-top: 20px solid blue;
   border-top-color: inherit;
   border-left: 20px solid transparent;
+}
+
+@media screen and (max-width: 420px) {
+  .chat-window {
+    font-size: 1.5em;
+  }
 }
 
 #message-form {
