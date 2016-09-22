@@ -225,20 +225,28 @@ ul#users > li > img#avatar {
   border-radius: 1rem;
   border: 1px solid #eee;
   position: relative;
+  left: 3.5rem;
   display: inline-block;
-  min-width: 10%;
+  max-width: 80%;
+  min-width: 4rem;
   background-color: #eee;
   margin-bottom: 1rem;
+  overflow: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 }
 
 .speech-bubble:after {
   content: "";
   position: absolute;
   top: 100%;
-  left: 4rem;
-  border-top: 20px solid blue;
+  left: 1rem;
+  border-top: 1.5rem solid blue;
   border-top-color: inherit;
-  border-right: 20px solid transparent;
+  border-right: 1.5rem solid transparent;
 }
 
 .message-owner {
@@ -258,26 +266,39 @@ ul#users > li > img#avatar {
   border: 1px solid #1589fd;
   position: relative;
   display: inline-block;
-  min-width: 10%;
+  max-width: 80%;
+  min-width: 4rem;
   background-color: #1589fd;
   color: white;
   margin-bottom: 1rem;
   text-align: left;
+  overflow: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 }
 
 .speech-bubble-owner:after {
   content: "";
   position: absolute;
   top: 100%;
-  right: 2rem;
-  border-top: 20px solid blue;
+  right: 1rem;
+  border-top: 1.5rem solid blue;
   border-top-color: inherit;
-  border-left: 20px solid transparent;
+  border-left: 1.5rem solid transparent;
 }
 
 @media screen and (max-width: 420px) {
   .chat-window {
     font-size: 1.5em;
+  }
+
+  .speech-bubble, .speech-bubble-owner {
+    min-width: 10%;
+    max-width: 80%;
+    margin: 2rem 0;
   }
 }
 
