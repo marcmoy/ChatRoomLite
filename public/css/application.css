@@ -1,5 +1,6 @@
 .body {
   font-family: 'Lato', sans-serif;
+  list-style: none;
 }
 
 .shadow {
@@ -135,4 +136,23 @@ ul.slick-dots {
 .username-input {
   width: 50%;
   margin: auto;
+}
+
+ul#users {
+  list-style: none;
+}
+
+ul#users > li > img#avatar {
+  height: 3rem;
+  width: 3rem;
+  margin-right: 1rem;
+  cursor: auto;
+}
+
+@media screen and (max-width: 420px) {
+  #online-users {
+    display: none;
+    height: 0;
+    width: 0;
+  }
 }

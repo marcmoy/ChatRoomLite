@@ -21,7 +21,6 @@ class Login extends React.Component {
   }
 
   setAvatar(avatar){
-    console.log(avatar);
     this.setState({ avatar: avatar });
   }
 
@@ -54,11 +53,16 @@ class Login extends React.Component {
     }
 
     if (valid) {
-      $('#userForm').removeClass('bounceInDown');
-      $('#userForm').addClass('bounceOutUp');
-      window.setTimeout(() => (
-        this.props.closeLogin()
-      ), 1000);
+      this.props.socket.emit('new user', this.state, data => {
+        if (data) {
+          $('#userForm').removeClass('bounceInDown');
+          $('#userForm').addClass('bounceOutUp');
+          window.setTimeout(() => {
+            $('#userFormArea').css('display', 'none').css('height', '0');
+            this.props.closeLogin();
+          }, 1000);
+        }
+      });
     }
   }
 

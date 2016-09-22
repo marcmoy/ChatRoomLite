@@ -1,6 +1,7 @@
 import React from 'react';
 import Slider from 'react-slick';
 import $ from 'jquery';
+import _ from 'lodash';
 
 const avatars = [
   'captain_falcon', 'dk', 'fox', 'kirby', 'link', 'mario', 'megaman',
@@ -66,7 +67,7 @@ const settings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
-  initialSlide: 7,
+  initialSlide: _.random(avatars.length),
   responsive: [{
     breakpoint: 1024,
     settings: {

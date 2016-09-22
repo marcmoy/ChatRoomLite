@@ -16,7 +16,10 @@ class ChatApp extends React.Component {
 
   view() {
     if (!this.state.login) {
-      return <Login closeLogin={this.closeLogin} />;
+      return <Login
+              closeLogin={this.closeLogin}
+              socket={this.props.socket}
+              />;
     } else {
       return <Chat socket={this.props.socket} />;
     }
@@ -25,7 +28,8 @@ class ChatApp extends React.Component {
   render() {
     return (
       <div>
-        {this.view()}
+        <Login closeLogin={this.closeLogin} socket={this.props.socket} />
+        <Chat socket={this.props.socket} />
       </div>
     );
   }
