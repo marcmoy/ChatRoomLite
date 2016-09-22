@@ -198,6 +198,7 @@ ul#users > li > img#avatar {
 .chat-window {
   height: 90%;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .chat-window > ul {
