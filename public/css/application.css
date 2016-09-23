@@ -375,4 +375,13 @@ span.emoji-button:hover {
     height: 0;
     width: 0;
   }
+
+  .message-notification {
+    text-align: center;
+  }
+}
+
+.message-notification {
+  color: #ccc;
+  font-style: italic;
 }

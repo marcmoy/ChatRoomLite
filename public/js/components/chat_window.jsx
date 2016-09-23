@@ -48,6 +48,9 @@ class ChatWindow extends React.Component {
               {message.user.username}
             </span>
           </div>;
+      } else {
+        messageClass = 'message-notification animated zoomIn';
+        bubbleClass = 'message-bubble';
       }
 
       return(

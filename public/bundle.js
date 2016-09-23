@@ -21733,7 +21733,7 @@
 	        window.setTimeout(function () {
 	          var av = (0, _jquery2.default)('div.slick-slide.slick-active.avatar-option').find('input')[0].value;
 	          _this2.props.setAvatar(av);
-	        }, 500);
+	        }, 800);
 	      });
 	    }
 	  }, {
@@ -51268,6 +51268,9 @@
 	              message.user.username
 	            )
 	          );
+	        } else {
+	          messageClass = 'message-notification animated zoomIn';
+	          bubbleClass = 'message-bubble';
 	        }
 	
 	        return _react2.default.createElement(

@@ -24,7 +24,7 @@ class Avatars extends React.Component {
         let av = $('div.slick-slide.slick-active.avatar-option')
           .find('input')[0].value;
         this.props.setAvatar(av);
-      }, 500);
+      }, 800);
     });
   }
 
