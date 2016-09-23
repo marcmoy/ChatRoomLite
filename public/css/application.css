@@ -144,6 +144,11 @@ ul#users {
   list-style: none;
 }
 
+ul#users > li {
+  text-align: left;
+  padding-left: 10px;
+}
+
 ul#users > li > img#avatar {
   height: 3rem;
   width: 3rem;
@@ -378,6 +383,7 @@ span.emoji-button:hover {
 
   .message-notification {
     text-align: center;
+    font-size: 18px;
   }
 }
 
