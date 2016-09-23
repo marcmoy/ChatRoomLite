@@ -51037,6 +51037,10 @@
 	
 	var _emoji_input2 = _interopRequireDefault(_emoji_input);
 	
+	var _jquery = __webpack_require__(192);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51044,6 +51048,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var windowWidth = (0, _jquery2.default)(window).width();
 	
 	var Chat = function (_React$Component) {
 	  _inherits(Chat, _React$Component);
@@ -51151,7 +51157,13 @@
 	                placeholder: 'Enter message',
 	                id: 'message', onChange: this.updateMessage,
 	                value: this.state.message }),
-	              _react2.default.createElement(_emoji_input2.default, { updateMessage: this.updateMessage })
+	              _react2.default.createElement(_emoji_input2.default, { updateMessage: this.updateMessage }),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-primary send-button',
+	                  onClick: this.sendMessage },
+	                'Send'
+	              )
 	            )
 	          )
 	        )

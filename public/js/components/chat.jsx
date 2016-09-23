@@ -1,6 +1,8 @@
 import React from 'react';
 import ChatWindow from './chat_window';
 import EmojiInput from './emoji_input';
+import $ from 'jquery';
+const windowWidth = $(window).width();
 
 class Chat extends React.Component {
   constructor(props) {
@@ -80,6 +82,10 @@ class Chat extends React.Component {
                 id="message" onChange={this.updateMessage}
                 value={this.state.message}></input>
               <EmojiInput updateMessage={this.updateMessage}/>
+              <button className='btn btn-primary send-button'
+                onClick={this.sendMessage}>
+                Send
+              </button>
             </div>
           </form>
         </div>
