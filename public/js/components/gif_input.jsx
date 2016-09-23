@@ -1,12 +1,11 @@
 import React from 'react';
+import $ from 'jquery';
 import { fetchGIFS } from '../../util/gif_api';
 
 const gifStyle = {
   position: 'fixed',
   right: '5%', bottom: '10%',
   backgroundColor: 'white',
-  width: '50%',
-  height: '50vh',
   padding: '.3em .6em',
   border: '1px solid #ccc',
   borderRadius: '5px',
@@ -25,7 +24,14 @@ class GIFInput extends React.Component {
     this.gifResults = this.gifResults.bind(this);
   }
 
-  toggleGIF() {
+  componentDidMount() {
+    $('left-side').on('click', () => this.setState({showGIFPicker: false}));
+    $('#chat').on('click', () => this.setState({showGIFPicker: false}));
+    $('.emoji-button').on('click', () => this.setState({showGIFPicker: false}));
+  }
+
+  toggleGIF(e) {
+    e.preventDefault();
     if (this.state.showGIFPicker) {
       this.setState({ showGIFPicker: false });
     } else {
@@ -89,7 +95,7 @@ class GIFInput extends React.Component {
   render() {
     return(
       <div className='gif-input-container'>
-        <button className='gif-button' onClick={this.toggleGIF}>GIF</button>
+        <span className='gif-button' onClick={this.toggleGIF}>GIF</span>
         {this.gifPicker()}
       </div>
     );

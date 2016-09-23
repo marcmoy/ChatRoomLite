@@ -364,7 +364,7 @@ span.emoji-button {
   justify-content: center;
   flex-direction: column;
   position: absolute;
-  right: 7.5%;
+  right: 7rem;
   border: none;
   color: #ccc;
   cursor: pointer;
@@ -403,28 +403,33 @@ span.emoji-button:hover {
   font-style: italic;
 }
 
-button.gif-button {
+span.gif-button {
   height: 34px;
-  width: auto;
+  width: 34px;
   position: absolute;
-  right: 3%;
+  right: 4rem;
   background-color: transparent;
   border: none;
   color: #ccc;
   font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-button.gif-button:hover {
+span.gif-button:hover {
   color: orange;
 }
 
-button.gif-button:focus {
+span.gif-button:focus {
   outline: none;
 }
 
 .gif-results {
-  overflow: scroll;
+  overflow-y: scroll;
   height: 45vh;
+  width: 50vw;
 }
 
 ul.gif-index {
@@ -433,4 +438,31 @@ ul.gif-index {
 
 li.gif-index-item {
   display: inline-block;
+}
+
+@media screen and (max-width: 420px) {
+  span.gif-button {
+    right: 1rem;
+    outline: none;
+  }
+
+  .gif-results {
+    height: 50vh;
+    width: 85vw;
+  }
+
+  .send-button {
+    width: 0;
+    padding: 0;
+    height: 34px;
+    position: absolute;
+    z-index: 5;
+    right: 1rem;
+    outline: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+  }
 }

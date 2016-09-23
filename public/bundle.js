@@ -51072,6 +51072,7 @@
 	    _this.bindSocketListeners = _this.bindSocketListeners.bind(_this);
 	    _this.updateMessage = _this.updateMessage.bind(_this);
 	    _this.sendMessage = _this.sendMessage.bind(_this);
+	    _this.width = (0, _jquery2.default)(window).width();
 	    return _this;
 	  }
 	
@@ -51125,8 +51126,20 @@
 	    value: function updateMessage(e) {
 	      if (typeof e === 'string') {
 	        this.setState({ message: e });
+	        this.updateSendButton(e);
 	      } else {
 	        this.setState({ message: e.target.value });
+	        this.updateSendButton(e.target.value);
+	      }
+	    }
+	  }, {
+	    key: 'updateSendButton',
+	    value: function updateSendButton(message) {
+	      if (this.width > 420) return;
+	      if (message === '') {
+	        (0, _jquery2.default)('.send-button').animate({ width: '0', padding: '0', color: 'transparent' }, 300);
+	      } else {
+	        (0, _jquery2.default)('.send-button').animate({ width: '60px', padding: '6px 12px', color: 'white' }, 300);
 	      }
 	    }
 	  }, {
@@ -51359,8 +51372,8 @@
 	  position: 'fixed',
 	  right: '5%', bottom: '10%',
 	  backgroundColor: 'white',
-	  width: '50%',
 	  height: 'auto',
+	  width: '40%',
 	  padding: '.3em .6em',
 	  border: '1px solid #ccc',
 	  borderRadius: '5px',
@@ -51388,10 +51401,13 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 	
-	      (0, _jquery2.default)('.chat-window').on('click', function () {
+	      (0, _jquery2.default)('left-side').on('click', function () {
 	        return _this2.setState({ showEmojiPicker: false });
 	      });
-	      (0, _jquery2.default)('.left-side').on('click', function () {
+	      (0, _jquery2.default)('#chat').on('click', function () {
+	        return _this2.setState({ showEmojiPicker: false });
+	      });
+	      (0, _jquery2.default)('.gif-button').on('click', function () {
 	        return _this2.setState({ showEmojiPicker: false });
 	      });
 	    }
@@ -72904,6 +72920,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _jquery = __webpack_require__(192);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	var _gif_api = __webpack_require__(359);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -72918,8 +72938,6 @@
 	  position: 'fixed',
 	  right: '5%', bottom: '10%',
 	  backgroundColor: 'white',
-	  width: '50%',
-	  height: '50vh',
 	  padding: '.3em .6em',
 	  border: '1px solid #ccc',
 	  borderRadius: '5px',
@@ -72945,8 +72963,24 @@
 	  }
 	
 	  _createClass(GIFInput, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      (0, _jquery2.default)('left-side').on('click', function () {
+	        return _this2.setState({ showGIFPicker: false });
+	      });
+	      (0, _jquery2.default)('#chat').on('click', function () {
+	        return _this2.setState({ showGIFPicker: false });
+	      });
+	      (0, _jquery2.default)('.emoji-button').on('click', function () {
+	        return _this2.setState({ showGIFPicker: false });
+	      });
+	    }
+	  }, {
 	    key: 'toggleGIF',
-	    value: function toggleGIF() {
+	    value: function toggleGIF(e) {
+	      e.preventDefault();
 	      if (this.state.showGIFPicker) {
 	        this.setState({ showGIFPicker: false });
 	      } else {
@@ -72966,11 +73000,11 @@
 	  }, {
 	    key: 'sendQuery',
 	    value: function sendQuery(e) {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      e.preventDefault();
 	      var success = function success(result) {
-	        return _this2.updateGifs(result);
+	        return _this3.updateGifs(result);
 	      };
 	      var error = function error(data) {
 	        return console.log(data);
@@ -73030,7 +73064,7 @@
 	        'div',
 	        { className: 'gif-input-container' },
 	        _react2.default.createElement(
-	          'button',
+	          'span',
 	          { className: 'gif-button', onClick: this.toggleGIF },
 	          'GIF'
 	        ),

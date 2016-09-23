@@ -8,8 +8,8 @@ const emojiPickerStyles = {
   position: 'fixed',
   right: '5%', bottom: '10%',
   backgroundColor: 'white',
-  width: '50%',
   height: 'auto',
+  width: '40%',
   padding: '.3em .6em',
   border: '1px solid #ccc',
   borderRadius: '5px',
@@ -27,8 +27,9 @@ class EmojiInput extends React.Component {
   }
 
   componentDidMount() {
-    $('.chat-window').on('click', () => this.setState({showEmojiPicker: false}));
-    $('.left-side').on('click', () => this.setState({showEmojiPicker: false}));
+    $('left-side').on('click', () => this.setState({showEmojiPicker: false}));
+    $('#chat').on('click', () => this.setState({showEmojiPicker: false}));
+    $('.gif-button').on('click', () => this.setState({showEmojiPicker: false}));
   }
 
   toggleEmojiPicker(e){

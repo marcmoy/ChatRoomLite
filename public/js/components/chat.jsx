@@ -12,6 +12,7 @@ class Chat extends React.Component {
     this.bindSocketListeners = this.bindSocketListeners.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.width = $(window).width();
   }
 
   componentDidMount() {
@@ -51,8 +52,23 @@ class Chat extends React.Component {
   updateMessage(e) {
     if (typeof e === 'string') {
       this.setState({ message: e });
+      this.updateSendButton(e);
     } else {
       this.setState({ message: e.target.value });
+      this.updateSendButton( e.target.value );
+    }
+  }
+
+  updateSendButton(message) {
+    if (this.width > 420) return;
+    if (message === '') {
+      $('.send-button').animate(
+        { width: '0', padding: '0', color: 'transparent'}
+      , 300);
+    } else {
+      $('.send-button').animate(
+        { width: '60px', padding: '6px 12px', color: 'white'}
+      , 300);
     }
   }
 
