@@ -14,23 +14,6 @@ class Avatars extends React.Component {
     this.radioButtons = this.radioButtons.bind(this);
   }
 
-  componentDidMount() {
-    window.setTimeout( () => {
-      let avatar = $('div.slick-slide.slick-active.avatar-option')
-                    .find('input')[0].value;
-      this.props.setAvatar(avatar);
-    }, 1000);
-
-
-    $('button').on('click', () => {
-      window.setTimeout( () => {
-        let av = $('div.slick-slide.slick-active.avatar-option')
-          .find('input')[0].value;
-        this.props.setAvatar(av);
-      }, 1000);
-    });
-  }
-
   radioButtons() {
       let options = avatars.map((avatar,i) => {
         let src = `/assets/avatars/${avatar}.png`;
@@ -39,7 +22,7 @@ class Avatars extends React.Component {
           <div className='avatar-option' key={avatar}>
             <label>
               <input  type='radio' name='avatar' id={id}
-                      value={avatar} onChange={this.props.setAvatar}/>
+                      value={avatar} />
               <img id='avatar' src={src} />
             </label>
           </div>

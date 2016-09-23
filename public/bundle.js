@@ -21560,9 +21560,8 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
 	
-	    _this.state = { username: '', avatar: '', users: [] };
+	    _this.state = { username: '', users: [] };
 	    _this.setUsername = _this.setUsername.bind(_this);
-	    _this.setAvatar = _this.setAvatar.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    return _this;
 	  }
@@ -21585,12 +21584,6 @@
 	    value: function setUsername(e) {
 	      this.setState({ username: e.target.value });
 	      this.validUsername(e.target.value);
-	    }
-	  }, {
-	    key: 'setAvatar',
-	    value: function setAvatar(avatar) {
-	      this.props.updateCurrentUser(this.state);
-	      this.setState({ avatar: avatar });
 	    }
 	  }, {
 	    key: 'validUsername',
@@ -21624,8 +21617,11 @@
 	      e.preventDefault();
 	
 	      if (this.validUsername(this.state.username)) {
-	        this.props.updateCurrentUser(this.state);
-	        this.props.socket.emit('new user', this.state, function (data) {
+	        var avatar = (0, _jquery2.default)('div.slick-slide.slick-active.avatar-option').find('input')[0].value;
+	        var userObj = { username: this.state.username, avatar: avatar };
+	
+	        this.props.updateCurrentUser(userObj);
+	        this.props.socket.emit('new user', userObj, function (data) {
 	          if (data) {
 	            (0, _jquery2.default)('#userForm').removeClass('bounceInDown');
 	            (0, _jquery2.default)('#userForm').addClass('bounceOutUp');
@@ -21681,7 +21677,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            { id: 'select-avatar', className: 'form-group' },
-	            _react2.default.createElement(_avatars2.default, { setAvatar: this.setAvatar })
+	            _react2.default.createElement(_avatars2.default, null)
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -21749,27 +21745,8 @@
 	  }
 	
 	  _createClass(Avatars, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-	
-	      window.setTimeout(function () {
-	        var avatar = (0, _jquery2.default)('div.slick-slide.slick-active.avatar-option').find('input')[0].value;
-	        _this2.props.setAvatar(avatar);
-	      }, 1000);
-	
-	      (0, _jquery2.default)('button').on('click', function () {
-	        window.setTimeout(function () {
-	          var av = (0, _jquery2.default)('div.slick-slide.slick-active.avatar-option').find('input')[0].value;
-	          _this2.props.setAvatar(av);
-	        }, 1000);
-	      });
-	    }
-	  }, {
 	    key: 'radioButtons',
 	    value: function radioButtons() {
-	      var _this3 = this;
-	
 	      var options = avatars.map(function (avatar, i) {
 	        var src = '/assets/avatars/' + avatar + '.png';
 	        var id = 'avatar' + i;
@@ -21780,7 +21757,7 @@
 	            'label',
 	            null,
 	            _react2.default.createElement('input', { type: 'radio', name: 'avatar', id: id,
-	              value: avatar, onChange: _this3.props.setAvatar }),
+	              value: avatar }),
 	            _react2.default.createElement('img', { id: 'avatar', src: src })
 	          )
 	        );

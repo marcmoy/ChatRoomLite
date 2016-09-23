@@ -5,9 +5,8 @@ import $ from 'jquery';
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { username: '', avatar: '', users: [] };
+    this.state = { username: '', users: [] };
     this.setUsername = this.setUsername.bind(this);
-    this.setAvatar = this.setAvatar.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -24,11 +23,6 @@ class Login extends React.Component {
   setUsername(e){
     this.setState({ username: e.target.value });
     this.validUsername(e.target.value);
-  }
-
-  setAvatar(avatar){
-    this.props.updateCurrentUser(this.state);
-    this.setState({ avatar: avatar });
   }
 
   validUsername(username) {
@@ -66,8 +60,12 @@ class Login extends React.Component {
     e.preventDefault();
 
     if (this.validUsername(this.state.username)) {
-      this.props.updateCurrentUser(this.state);
-      this.props.socket.emit('new user', this.state, data => {
+      let avatar = $('div.slick-slide.slick-active.avatar-option')
+                    .find('input')[0].value;
+      let userObj = { username: this.state.username, avatar: avatar };
+
+      this.props.updateCurrentUser(userObj);
+      this.props.socket.emit('new user', userObj, data => {
         if (data) {
           $('#userForm').removeClass('bounceInDown');
           $('#userForm').addClass('bounceOutUp');
@@ -101,7 +99,7 @@ class Login extends React.Component {
             <div id='username-error'><br/></div>
           </div>
           <div id='select-avatar' className='form-group'>
-            <Avatars setAvatar={this.setAvatar} />
+            <Avatars />
           </div>
           <div className='form-group'>
             <input type='submit' className='btn btn-primary' value='Login' />
