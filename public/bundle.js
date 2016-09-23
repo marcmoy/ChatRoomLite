@@ -21560,7 +21560,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
 	
-	    _this.state = { username: '', avatar: '' };
+	    _this.state = { username: '', avatar: '', users: [] };
 	    _this.setUsername = _this.setUsername.bind(_this);
 	    _this.setAvatar = _this.setAvatar.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
@@ -21568,14 +21568,23 @@
 	  }
 	
 	  _createClass(Login, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      this.props.socket.emit('fetch users', function (users) {
+	        _this2.setState({ users: users });
+	      });
+	
+	      this.props.socket.on('receive users', function (users) {
+	        _this2.setState({ users: users });
+	      });
+	    }
+	  }, {
 	    key: 'setUsername',
 	    value: function setUsername(e) {
 	      this.setState({ username: e.target.value });
-	      if (e.target.value.includes(' ')) {
-	        (0, _jquery2.default)('#username-error').html("<span>Username can't have spaces.</span>");
-	      } else {
-	        (0, _jquery2.default)('#username-error').html('<br>');
-	      }
+	      this.validUsername(e.target.value);
 	    }
 	  }, {
 	    key: 'setAvatar',
@@ -21584,36 +21593,37 @@
 	      this.setState({ avatar: avatar });
 	    }
 	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(e) {
-	      var _this2 = this;
-	
-	      e.preventDefault();
+	    key: 'validUsername',
+	    value: function validUsername(username) {
 	      var valid = true;
 	
-	      if (this.state.username.includes(' ') || this.state.username.length === 0) {
+	      var currentUsernames = this.state.users.map(function (user) {
+	        return user.username;
+	      });
+	
+	      if (username.length === 0) {
 	        valid = false;
-	        (0, _jquery2.default)('#username-error').html("<span>Username can't be blank or have spaces.</span>");
-	        (0, _jquery2.default)('#enter-username').addClass('animated shake');
-	        window.setTimeout(function () {
-	          return (0, _jquery2.default)('#enter-username').removeClass('animated shake');
-	        }, 1000);
+	        (0, _jquery2.default)('#username-error').html("<span>Username can't be blank.</span>");
+	      } else if (username.includes(' ')) {
+	        valid = false;
+	        (0, _jquery2.default)('#username-error').html("<span>Username can't include spaces.</span>");
+	      } else if (currentUsernames.includes(username)) {
+	        valid = false;
+	        (0, _jquery2.default)('#username-error').html("<span>Username already taken.</span>");
 	      } else {
-	        (0, _jquery2.default)('#username-error').html('<br>');
+	        (0, _jquery2.default)('#username-error').html("<span><br></span>");
 	      }
 	
-	      if (this.state.avatar === '') {
-	        valid = false;
-	        (0, _jquery2.default)('#avatar-error').html('<span>Must select an avatar.</span>');
-	        (0, _jquery2.default)('#select-avatar').addClass('animated shake');
-	        window.setTimeout(function () {
-	          return (0, _jquery2.default)('#select-avatar').removeClass('animated shake');
-	        }, 1000);
-	      } else {
-	        (0, _jquery2.default)('#avatar-error').html('<br>');
-	      }
+	      return valid;
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      var _this3 = this;
 	
-	      if (valid) {
+	      e.preventDefault();
+	
+	      if (this.validUsername(this.state.username)) {
 	        this.props.updateCurrentUser(this.state);
 	        this.props.socket.emit('new user', this.state, function (data) {
 	          if (data) {
@@ -21621,10 +21631,15 @@
 	            (0, _jquery2.default)('#userForm').addClass('bounceOutUp');
 	            window.setTimeout(function () {
 	              (0, _jquery2.default)('#userFormArea').css('display', 'none').css('height', '0');
-	              _this2.props.closeLogin();
+	              _this3.props.closeLogin();
 	            }, 1000);
 	          }
 	        });
+	      } else {
+	        (0, _jquery2.default)('#enter-username').addClass('animated shake');
+	        window.setTimeout(function () {
+	          return (0, _jquery2.default)('#enter-username').removeClass('animated shake');
+	        }, 1000);
 	      }
 	    }
 	  }, {
@@ -21649,7 +21664,12 @@
 	              className: 'form-control text-center username-input',
 	              placeholder: 'Enter a username',
 	              onChange: this.setUsername,
-	              id: 'username' })
+	              id: 'username' }),
+	            _react2.default.createElement(
+	              'div',
+	              { id: 'username-error' },
+	              _react2.default.createElement('br', null)
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -21726,14 +21746,16 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 	
-	      var avatar = (0, _jquery2.default)('div.slick-slide.slick-active.avatar-option').find('input')[0].value;
-	      this.props.setAvatar(avatar);
+	      window.setTimeout(function () {
+	        var avatar = (0, _jquery2.default)('div.slick-slide.slick-active.avatar-option').find('input')[0].value;
+	        _this2.props.setAvatar(avatar);
+	      }, 1000);
 	
 	      (0, _jquery2.default)('button').on('click', function () {
 	        window.setTimeout(function () {
 	          var av = (0, _jquery2.default)('div.slick-slide.slick-active.avatar-option').find('input')[0].value;
 	          _this2.props.setAvatar(av);
-	        }, 800);
+	        }, 1000);
 	      });
 	    }
 	  }, {
@@ -51048,8 +51070,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var windowWidth = (0, _jquery2.default)(window).width();
 	
 	var Chat = function (_React$Component) {
 	  _inherits(Chat, _React$Component);

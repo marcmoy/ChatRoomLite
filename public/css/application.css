@@ -97,18 +97,9 @@ button.slick-arrow.slick-next, button.slick-arrow.slick-prev {
   border: 2px solid transparent;
 }
 
-.error {
+#username-error {
   color: red;
-  height: 2rem;
-  margin: 1rem 0;
 }
-
-  .error > span {
-    background-color: pink;
-    border-radius: 0.5rem;
-    padding: 0.8rem;
-    font-size: 1.2rem;
-  }
 
 @media screen and (min-width: 420px) {
   .error {

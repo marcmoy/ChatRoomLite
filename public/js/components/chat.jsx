@@ -2,7 +2,6 @@ import React from 'react';
 import ChatWindow from './chat_window';
 import EmojiInput from './emoji_input';
 import $ from 'jquery';
-const windowWidth = $(window).width();
 
 class Chat extends React.Component {
   constructor(props) {

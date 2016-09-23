@@ -5,19 +5,25 @@ import $ from 'jquery';
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { username: '', avatar: '' };
+    this.state = { username: '', avatar: '', users: [] };
     this.setUsername = this.setUsername.bind(this);
     this.setAvatar = this.setAvatar.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.props.socket.emit('fetch users', users => {
+      this.setState({ users: users });
+    });
+
+    this.props.socket.on('receive users', users => {
+      this.setState({ users: users });
+    });
+  }
+
   setUsername(e){
     this.setState({ username: e.target.value });
-    if (e.target.value.includes(' ')) {
-      $('#username-error').html("<span>Username can't have spaces.</span>");
-    } else {
-      $('#username-error').html('<br>');
-    }
+    this.validUsername(e.target.value);
   }
 
   setAvatar(avatar){
@@ -25,35 +31,41 @@ class Login extends React.Component {
     this.setState({ avatar: avatar });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  validUsername(username) {
     let valid = true;
 
-    if (this.state.username.includes(' ') || this.state.username.length === 0) {
+    let currentUsernames = this.state.users.map(user => {
+      return user.username;
+    });
+
+    if (username.length === 0){
       valid = false;
       $('#username-error').html(
-        "<span>Username can't be blank or have spaces.</span>"
+        "<span>Username can't be blank.</span>"
       );
-      $('#enter-username').addClass('animated shake');
-      window.setTimeout(() => (
-        $('#enter-username').removeClass('animated shake')
-      ), 1000);
-    } else {
-      $('#username-error').html('<br>');
-    }
-
-    if (this.state.avatar === ''){
+    } else if (username.includes(' ')){
       valid = false;
-      $('#avatar-error').html('<span>Must select an avatar.</span>');
-      $('#select-avatar').addClass('animated shake');
-      window.setTimeout(() => (
-        $('#select-avatar').removeClass('animated shake')
-      ), 1000);
+      $('#username-error').html(
+        "<span>Username can't include spaces.</span>"
+      );
+    } else if (currentUsernames.includes(username)) {
+      valid = false;
+      $('#username-error').html(
+        "<span>Username already taken.</span>"
+      );
     } else {
-      $('#avatar-error').html('<br>');
+      $('#username-error').html(
+        "<span><br></span>"
+      );
     }
 
-    if (valid) {
+    return valid;
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    if (this.validUsername(this.state.username)) {
       this.props.updateCurrentUser(this.state);
       this.props.socket.emit('new user', this.state, data => {
         if (data) {
@@ -65,6 +77,11 @@ class Login extends React.Component {
           }, 1000);
         }
       });
+    } else {
+      $('#enter-username').addClass('animated shake');
+      window.setTimeout(() => (
+        $('#enter-username').removeClass('animated shake')
+      ), 1000);
     }
   }
 
@@ -80,6 +97,7 @@ class Login extends React.Component {
               placeholder='Enter a username'
               onChange={this.setUsername}
               id='username' />
+            <div id='username-error'><br/></div>
           </div>
           <div id='select-avatar' className='form-group'>
             <Avatars setAvatar={this.setAvatar} />

@@ -15,16 +15,19 @@ class Avatars extends React.Component {
   }
 
   componentDidMount() {
-    let avatar = $('div.slick-slide.slick-active.avatar-option')
-                  .find('input')[0].value;
-    this.props.setAvatar(avatar);
+    window.setTimeout( () => {
+      let avatar = $('div.slick-slide.slick-active.avatar-option')
+                    .find('input')[0].value;
+      this.props.setAvatar(avatar);
+    }, 1000);
+
 
     $('button').on('click', () => {
       window.setTimeout( () => {
         let av = $('div.slick-slide.slick-active.avatar-option')
           .find('input')[0].value;
         this.props.setAvatar(av);
-      }, 800);
+      }, 1000);
     });
   }
 
