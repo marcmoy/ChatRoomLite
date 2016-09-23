@@ -51255,7 +51255,7 @@
 	        var bubbleClass = 'speech-bubble';
 	        var messageClass = 'message animated fadeInLeft';
 	        var userClass = 'message-avatar-username';
-	        if (message.user) {
+	        if (message.user && currentUser) {
 	          if (currentUser.username === message.user.username) {
 	            bubbleClass = 'speech-bubble-owner';
 	            messageClass = 'message-owner animated fadeInRight';

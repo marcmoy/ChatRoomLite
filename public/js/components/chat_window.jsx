@@ -31,7 +31,7 @@ class ChatWindow extends React.Component {
       let bubbleClass = 'speech-bubble';
       let messageClass = 'message animated fadeInLeft';
       let userClass = 'message-avatar-username';
-      if (message.user) {
+      if (message.user && currentUser) {
         if (currentUser.username === message.user.username) {
           bubbleClass = 'speech-bubble-owner';
           messageClass = 'message-owner animated fadeInRight';
