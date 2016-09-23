@@ -1,6 +1,7 @@
 import React from 'react';
 import ChatWindow from './chat_window';
 import EmojiInput from './emoji_input';
+import GIFInput from './gif_input';
 import $ from 'jquery';
 
 class Chat extends React.Component {
@@ -81,6 +82,7 @@ class Chat extends React.Component {
                 id="message" onChange={this.updateMessage}
                 value={this.state.message}></input>
               <EmojiInput updateMessage={this.updateMessage}/>
+              <GIFInput />
               <button className='btn btn-primary send-button'
                 onClick={this.sendMessage}>
                 Send

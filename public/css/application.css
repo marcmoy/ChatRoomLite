@@ -364,7 +364,7 @@ span.emoji-button {
   justify-content: center;
   flex-direction: column;
   position: absolute;
-  right: 2.5%;
+  right: 7.5%;
   border: none;
   color: #ccc;
   cursor: pointer;
@@ -401,4 +401,36 @@ span.emoji-button:hover {
 .message-notification {
   color: #ccc;
   font-style: italic;
+}
+
+button.gif-button {
+  height: 34px;
+  width: auto;
+  position: absolute;
+  right: 3%;
+  background-color: transparent;
+  border: none;
+  color: #ccc;
+  font-weight: bold;
+}
+
+button.gif-button:hover {
+  color: orange;
+}
+
+button.gif-button:focus {
+  outline: none;
+}
+
+.gif-results {
+  overflow: scroll;
+  height: 45vh;
+}
+
+ul.gif-index {
+  list-style: none;
+}
+
+li.gif-index-item {
+  display: inline-block;
 }
