@@ -1,5 +1,6 @@
 import React from 'react';
 var EmojiPicker = require('react-emoji-picker');
+import EMOJIS from '../../assets/emojis';
 import emojiMap from 'react-emoji-picker/lib/emojiMap';
 import $ from 'jquery';
 
@@ -20,7 +21,6 @@ class EmojiInput extends React.Component {
     super(props);
     this.state = { emoji: null, showEmojiPicker: false };
     this.toggleEmojiPicker = this.toggleEmojiPicker.bind(this);
-    this.validateEmoji = this.validateEmoji.bind(this);
     this.updateState = this.updateState.bind(this);
     this.setEmoji = this.setEmoji.bind(this);
     this.emojiPicker = this.emojiPicker.bind(this);
@@ -34,20 +34,9 @@ class EmojiInput extends React.Component {
   toggleEmojiPicker(e){
     e.preventDefault();
     if(this.state.showEmojiPicker) {
-      setTimeout(this.validateEmoji, 10);
       this.setState({showEmojiPicker: false});
     } else {
       this.setState({showEmojiPicker: true});
-    }
-  }
-
-  validateEmoji() {
-    let matched = emojiMap.filter(emoji => {
-      return `:${emoji.name}:` === this.state.emoji;
-    });
-
-    if(matched.length === 0) {
-      this.setState({emoji: null});
     }
   }
 
@@ -56,8 +45,9 @@ class EmojiInput extends React.Component {
   }
 
   setEmoji(emoji) {
+    let unicode = EMOJIS[emoji.slice(1, emoji.length - 1)];
     let $input = $('.message-input');
-    let message = [$input.val(), emoji].join(' ');
+    let message = [$input.val(), unicode].join(' ');
     this.props.updateMessage(message);
     this.setState({showEmojiPicker: false});
     $input.focus();
