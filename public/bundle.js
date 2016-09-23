@@ -21654,8 +21654,15 @@
 	            className: 'text-center animated bounceInDown shadow' },
 	          _react2.default.createElement(
 	            'h1',
-	            null,
+	            { className: 'desktop-h1' },
 	            'Welcome to ChatRoomLite!'
+	          ),
+	          _react2.default.createElement(
+	            'h1',
+	            { className: 'mobile-h1' },
+	            'Welcome to',
+	            _react2.default.createElement('br', null),
+	            'ChatRoomLite!'
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -51121,7 +51128,7 @@
 	        'div',
 	        { id: 'online-users' },
 	        _react2.default.createElement(
-	          'h5',
+	          'h4',
 	          null,
 	          'Online Users'
 	        ),

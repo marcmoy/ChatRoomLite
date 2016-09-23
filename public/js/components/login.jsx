@@ -90,7 +90,8 @@ class Login extends React.Component {
       <div id='userFormArea' onSubmit={this.handleSubmit}>
         <form id='userForm'
             className='text-center animated bounceInDown shadow'>
-          <h1>Welcome to ChatRoomLite!</h1>
+          <h1 className='desktop-h1'>Welcome to ChatRoomLite!</h1>
+          <h1 className='mobile-h1'>Welcome to<br/>ChatRoomLite!</h1>
           <div id='enter-username' className='form-group'>
             <input
               className='form-control text-center username-input'

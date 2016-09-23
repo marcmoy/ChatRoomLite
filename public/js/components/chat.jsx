@@ -39,7 +39,7 @@ class Chat extends React.Component {
 
     return(
       <div id="online-users">
-        <h5>Online Users</h5>
+        <h4>Online Users</h4>
         <ul className="list-group" id="users">
           {users}
         </ul>

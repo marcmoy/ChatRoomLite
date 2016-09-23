@@ -1,3 +1,4 @@
+
 .body {
   font-family: 'Lato', sans-serif;
   list-style: none;
@@ -37,7 +38,7 @@
   justify-content: center;
 }
 
-#userForm > h1 {
+#userForm > h1.desktop-h1 {
   font-size: 4rem;
   position: absolute;
   margin-left: -100%;
@@ -46,6 +47,10 @@
   right: 0;
   top: -15vh;
   text-align: center;
+}
+
+#userForm > h1.mobile-h1 {
+  display: none;
 }
 
 @media screen and (max-width: 420px) {
@@ -57,6 +62,21 @@
     justify-content: center;
     flex-direction: column;
     font-size: 2rem;
+  }
+
+  #userForm > h1.desktop-h1 {
+    display: none;
+  }
+
+  #userForm > h1.mobile-h1 {
+    display: inline-block;
+    font-size: 3rem;
+    overflow: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
   }
 
   .avatar-slider-container {
@@ -330,7 +350,7 @@ ul#users > li > img#avatar {
   width: 95%;
 }
 
-.animated.fadeInLeft, .animated.fadeInRight {
+.animated.fadeInLeft, .animated.fadeInRight, .animated.zoomIn {
   -webkit-animation-duration: .25s;
   animation-duration: .25s;
 }
