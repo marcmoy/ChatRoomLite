@@ -1,5 +1,6 @@
 import React from 'react';
 import ChatWindow from './chat_window';
+import EmojiInput from './emoji_input';
 
 class Chat extends React.Component {
   constructor(props) {
@@ -46,7 +47,11 @@ class Chat extends React.Component {
   }
 
   updateMessage(e) {
-    this.setState({ message: e.target.value });
+    if (typeof e === 'string') {
+      this.setState({ message: e });
+    } else {
+      this.setState({ message: e.target.value });
+    }
   }
 
   sendMessage(e) {
@@ -70,9 +75,11 @@ class Chat extends React.Component {
           <form id="message-form" className='form-inline chat'
             onSubmit={this.sendMessage}>
             <div className="form-group">
-              <input className="form-control" placeholder='Enter message'
+              <input className="form-control message-input"
+                placeholder='Enter message'
                 id="message" onChange={this.updateMessage}
                 value={this.state.message}></input>
+              <EmojiInput updateMessage={this.updateMessage}/>
             </div>
           </form>
         </div>
