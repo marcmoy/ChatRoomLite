@@ -231,7 +231,7 @@ ul#users > li > img#avatar {
 #avatar-chat {
   height: 4rem;
   width: 4rem;
-  margin-right: 2rem;
+  margin-right: 0.8rem;
   border-radius: 50%;
 }
 
@@ -308,13 +308,17 @@ ul#users > li > img#avatar {
 
 @media screen and (max-width: 420px) {
   .chat-window {
-    font-size: 1.5em;
+    font-size: 1.0em;
+  }
+
+  .chat-window  > ul {
+    padding-bottom: 0;
   }
 
   .speech-bubble, .speech-bubble-owner {
     min-width: 10%;
     max-width: 80%;
-    margin: 2rem 0;
+    margin: 1rem 0;
   }
 
   .speech-bubble-owner {
@@ -325,6 +329,11 @@ ul#users > li > img#avatar {
     display: none;
     height: 0;
     width: 0;
+  }
+
+  .message-notification {
+    text-align: center;
+    margin: 1rem;
   }
 }
 
@@ -507,4 +516,9 @@ li.gif-index-item > img:hover {
     width: auto;
     margin: 0.5rem;
   }
+}
+
+.bubble-username {
+  font-style: italic;
+  color: #989090;
 }

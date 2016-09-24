@@ -86,7 +86,7 @@ class Chat extends React.Component {
     e.preventDefault();
     this.props.socket.emit('send message', e.target.src);
   }
-  
+
   render() {
     return(
       <div id="messageArea">

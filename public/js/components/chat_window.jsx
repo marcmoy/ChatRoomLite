@@ -44,7 +44,8 @@ class ChatWindow extends React.Component {
         src = `/assets/avatars/${message.user.avatar}.png`;
         avatar =
           <div className={userClass}>
-            <img src={src} id='avatar-chat'/><span>
+            <img src={src} id='avatar-chat'/>
+            <span className='bubble-username'>
               {message.user.username}
             </span>
           </div>;

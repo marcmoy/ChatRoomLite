@@ -51294,7 +51294,7 @@
 	            _react2.default.createElement('img', { src: src, id: 'avatar-chat' }),
 	            _react2.default.createElement(
 	              'span',
-	              null,
+	              { className: 'bubble-username' },
 	              message.user.username
 	            )
 	          );
