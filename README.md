@@ -13,11 +13,10 @@ When the client receives data from socket events, React.js parses that data and 
 
 ##Desktop
 
-![login](/docs/login.gif)
+<img src='/docs/login.gif' height='auto' width='70%'>
 
-
-![gif-input](/docs/gif-input.gif)
+<img src='/docs/gif-input.gif' height='auto' width='70%'>
 
 ##Mobile
 
-![mobile](/docs/mobile.gif)
+<img src='/docs/small-mobile.gif' width='300'>
