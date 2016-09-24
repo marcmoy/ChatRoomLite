@@ -10,3 +10,7 @@ Node.js and Express allows for asynchronous event loops that will create a live 
 
 ##Client-side
 When the client receives data from socket events, React.js parses that data and updates it's state. This allows for elements to render dynamically as data is emitted from other connected users. In addition to providing animations, jQuery was also used for AJAX requests to retrieve gifs from the [GIPHY API library](https://github.com/Giphy/GiphyAPI).
+
+![login](/docs/login.gif)
+
+![gif-input](/docs/gif-input.gif)
