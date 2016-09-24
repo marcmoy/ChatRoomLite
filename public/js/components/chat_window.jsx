@@ -53,9 +53,16 @@ class ChatWindow extends React.Component {
         bubbleClass = 'message-bubble';
       }
 
+      let inputMessage;
+      if (message.text.substring(0,4) === 'http') {
+        inputMessage = <img src={message.text} className='bubble-gif'/>;
+      } else {
+        inputMessage = message.text;
+      }
+
       return(
         <li className={messageClass} key={i}>
-          <div className={bubbleClass}>{message.text}</div>
+          <div className={bubbleClass}>{inputMessage}</div>
           {avatar}
         </li>
       );

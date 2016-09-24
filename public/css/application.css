@@ -430,14 +430,40 @@ span.gif-button:focus {
   overflow-y: scroll;
   height: 45vh;
   width: 50vw;
+  margin: 10px;
+}
+
+.gif-search-box > div.row > form > input {
+  width: 90%;
+  text-align: center;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 ul.gif-index {
   list-style: none;
+  padding: 0;
+  width: 100%;
 }
 
 li.gif-index-item {
   display: inline-block;
+  cursor: pointer;
+  padding: 0;
+  width: 50%;
+  height: 150px;
+  overflow: hidden;
+  vertical-align: middle
+}
+
+li.gif-index-item > img{
+  width: 110%;
+}
+
+li.gif-index-item > img:hover {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 420px) {
@@ -447,7 +473,7 @@ li.gif-index-item {
   }
 
   .gif-results {
-    height: 50vh;
+    height: 70vh;
     width: 85vw;
   }
 
@@ -464,5 +490,21 @@ li.gif-index-item {
     flex-direction: column;
     justify-content: center;
     font-weight: bold;
+  }
+
+  li.gif-index-item {
+    height: auto;
+  }
+}
+
+.bubble-gif {
+  width: 400px;
+  margin: 10px;
+}
+
+@media screen and (max-width: 420px) {
+  .bubble-gif {
+    width: auto;
+    margin: 0.5rem;
   }
 }

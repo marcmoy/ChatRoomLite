@@ -4,7 +4,7 @@ import { fetchGIFS } from '../../util/gif_api';
 
 const gifStyle = {
   position: 'fixed',
-  right: '5%', bottom: '10%',
+  right: '2.5%', bottom: '10%',
   backgroundColor: 'white',
   padding: '.3em .6em',
   border: '1px solid #ccc',
@@ -15,11 +15,11 @@ const gifStyle = {
 class GIFInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { query: '', gifs: [], showGIFPicker: false };
+    this.state = { gifs: [], showGIFPicker: false };
     this.toggleGIF = this.toggleGIF.bind(this);
     this.updateGifs = this.updateGifs.bind(this);
-    this.updateQuery = this.updateQuery.bind(this);
     this.sendQuery = this.sendQuery.bind(this);
+    this.sendGIF = this.sendGIF.bind(this);
     this.gifPicker = this.gifPicker.bind(this);
     this.gifResults = this.gifResults.bind(this);
   }
@@ -28,6 +28,10 @@ class GIFInput extends React.Component {
     $('left-side').on('click', () => this.setState({showGIFPicker: false}));
     $('#chat').on('click', () => this.setState({showGIFPicker: false}));
     $('.emoji-button').on('click', () => this.setState({showGIFPicker: false}));
+    $('#message').focus(() => this.setState({showGIFPicker: false}));
+    let success = result => this.updateGifs(result);
+    let error = data => console.log(data);
+    fetchGIFS('dog', success, error);
   }
 
   toggleGIF(e) {
@@ -43,16 +47,19 @@ class GIFInput extends React.Component {
     this.setState({ gifs: result.data });
   }
 
-  updateQuery(e) {
-    this.setState({ query: e.target.value });
-  }
-
   sendQuery(e) {
     e.preventDefault();
+    let query;
+    if (e.target.value) {
+      query = e.target.value;
+    } else {
+      query = $('#gif-input').value;
+    }
+
     let success = result => this.updateGifs(result);
     let error = data => console.log(data);
 
-    fetchGIFS(this.state.query, success, error);
+    fetchGIFS(query, success, error);
   }
 
   gifPicker() {
@@ -62,9 +69,10 @@ class GIFInput extends React.Component {
           <div className='row'>
             <form onSubmit={this.sendQuery}>
               <input type='text'
+                id='gif-input'
                 value={this.state.query}
                 placeholder='Search for GIF'
-                onChange={this.updateQuery}/>
+                onChange={this.sendQuery}/>
             </form>
           </div>
           <div className='gif-results'>
@@ -75,18 +83,23 @@ class GIFInput extends React.Component {
     }
   }
 
+  sendGIF(e) {
+    this.setState({ showGIFPicker: false });
+    this.props.sendGIF(e);
+  }
+
   gifResults() {
     let gifs = this.state.gifs.map((gif,i) => {
-      let src = gif.images.fixed_width_small.url;
+      let src = gif.images.fixed_width.url;
       return(
-        <li className='gif-index-item' key={i}>
+        <li className='gif-index-item' key={i} onClick={this.sendGIF}>
           <img src={src} />
         </li>
       );
     });
 
     return (
-      <ul className='gif-index'>
+      <ul className='gif-index container'>
         {gifs}
       </ul>
     );

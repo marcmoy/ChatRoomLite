@@ -51072,6 +51072,7 @@
 	    _this.bindSocketListeners = _this.bindSocketListeners.bind(_this);
 	    _this.updateMessage = _this.updateMessage.bind(_this);
 	    _this.sendMessage = _this.sendMessage.bind(_this);
+	    _this.sendGIF = _this.sendGIF.bind(_this);
 	    _this.width = (0, _jquery2.default)(window).width();
 	    return _this;
 	  }
@@ -51149,7 +51150,14 @@
 	      if (this.state.message.replace(/\s/g, '').length) {
 	        this.props.socket.emit('send message', this.state.message);
 	        this.setState({ message: '' });
+	        (0, _jquery2.default)('.send-button').animate({ width: '0', padding: '0', color: 'transparent' }, 300);
 	      }
+	    }
+	  }, {
+	    key: 'sendGIF',
+	    value: function sendGIF(e) {
+	      e.preventDefault();
+	      this.props.socket.emit('send message', e.target.src);
 	    }
 	  }, {
 	    key: 'render',
@@ -51179,7 +51187,7 @@
 	                id: 'message', onChange: this.updateMessage,
 	                value: this.state.message }),
 	              _react2.default.createElement(_emoji_input2.default, { updateMessage: this.updateMessage }),
-	              _react2.default.createElement(_gif_input2.default, null),
+	              _react2.default.createElement(_gif_input2.default, { sendGIF: this.sendGIF, closeGIF: this.closeGIF }),
 	              _react2.default.createElement(
 	                'button',
 	                { className: 'btn btn-primary send-button',
@@ -51295,13 +51303,20 @@
 	          bubbleClass = 'message-bubble';
 	        }
 	
+	        var inputMessage = void 0;
+	        if (message.text.substring(0, 4) === 'http') {
+	          inputMessage = _react2.default.createElement('img', { src: message.text, className: 'bubble-gif' });
+	        } else {
+	          inputMessage = message.text;
+	        }
+	
 	        return _react2.default.createElement(
 	          'li',
 	          { className: messageClass, key: i },
 	          _react2.default.createElement(
 	            'div',
 	            { className: bubbleClass },
-	            message.text
+	            inputMessage
 	          ),
 	          avatar
 	        );
@@ -51408,6 +51423,9 @@
 	        return _this2.setState({ showEmojiPicker: false });
 	      });
 	      (0, _jquery2.default)('.gif-button').on('click', function () {
+	        return _this2.setState({ showEmojiPicker: false });
+	      });
+	      (0, _jquery2.default)('#message').focus(function () {
 	        return _this2.setState({ showEmojiPicker: false });
 	      });
 	    }
@@ -72936,7 +72954,7 @@
 	
 	var gifStyle = {
 	  position: 'fixed',
-	  right: '5%', bottom: '10%',
+	  right: '2.5%', bottom: '10%',
 	  backgroundColor: 'white',
 	  padding: '.3em .6em',
 	  border: '1px solid #ccc',
@@ -72952,11 +72970,11 @@
 	
 	    var _this = _possibleConstructorReturn(this, (GIFInput.__proto__ || Object.getPrototypeOf(GIFInput)).call(this, props));
 	
-	    _this.state = { query: '', gifs: [], showGIFPicker: false };
+	    _this.state = { gifs: [], showGIFPicker: false };
 	    _this.toggleGIF = _this.toggleGIF.bind(_this);
 	    _this.updateGifs = _this.updateGifs.bind(_this);
-	    _this.updateQuery = _this.updateQuery.bind(_this);
 	    _this.sendQuery = _this.sendQuery.bind(_this);
+	    _this.sendGIF = _this.sendGIF.bind(_this);
 	    _this.gifPicker = _this.gifPicker.bind(_this);
 	    _this.gifResults = _this.gifResults.bind(_this);
 	    return _this;
@@ -72976,6 +72994,16 @@
 	      (0, _jquery2.default)('.emoji-button').on('click', function () {
 	        return _this2.setState({ showGIFPicker: false });
 	      });
+	      (0, _jquery2.default)('#message').focus(function () {
+	        return _this2.setState({ showGIFPicker: false });
+	      });
+	      var success = function success(result) {
+	        return _this2.updateGifs(result);
+	      };
+	      var error = function error(data) {
+	        return console.log(data);
+	      };
+	      (0, _gif_api.fetchGIFS)('dog', success, error);
 	    }
 	  }, {
 	    key: 'toggleGIF',
@@ -72993,16 +73021,18 @@
 	      this.setState({ gifs: result.data });
 	    }
 	  }, {
-	    key: 'updateQuery',
-	    value: function updateQuery(e) {
-	      this.setState({ query: e.target.value });
-	    }
-	  }, {
 	    key: 'sendQuery',
 	    value: function sendQuery(e) {
 	      var _this3 = this;
 	
 	      e.preventDefault();
+	      var query = void 0;
+	      if (e.target.value) {
+	        query = e.target.value;
+	      } else {
+	        query = (0, _jquery2.default)('#gif-input').value;
+	      }
+	
 	      var success = function success(result) {
 	        return _this3.updateGifs(result);
 	      };
@@ -73010,7 +73040,7 @@
 	        return console.log(data);
 	      };
 	
-	      (0, _gif_api.fetchGIFS)(this.state.query, success, error);
+	      (0, _gif_api.fetchGIFS)(query, success, error);
 	    }
 	  }, {
 	    key: 'gifPicker',
@@ -73026,9 +73056,10 @@
 	              'form',
 	              { onSubmit: this.sendQuery },
 	              _react2.default.createElement('input', { type: 'text',
+	                id: 'gif-input',
 	                value: this.state.query,
 	                placeholder: 'Search for GIF',
-	                onChange: this.updateQuery })
+	                onChange: this.sendQuery })
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -73040,20 +73071,28 @@
 	      }
 	    }
 	  }, {
+	    key: 'sendGIF',
+	    value: function sendGIF(e) {
+	      this.setState({ showGIFPicker: false });
+	      this.props.sendGIF(e);
+	    }
+	  }, {
 	    key: 'gifResults',
 	    value: function gifResults() {
+	      var _this4 = this;
+	
 	      var gifs = this.state.gifs.map(function (gif, i) {
-	        var src = gif.images.fixed_width_small.url;
+	        var src = gif.images.fixed_width.url;
 	        return _react2.default.createElement(
 	          'li',
-	          { className: 'gif-index-item', key: i },
+	          { className: 'gif-index-item', key: i, onClick: _this4.sendGIF },
 	          _react2.default.createElement('img', { src: src })
 	        );
 	      });
 	
 	      return _react2.default.createElement(
 	        'ul',
-	        { className: 'gif-index' },
+	        { className: 'gif-index container' },
 	        gifs
 	      );
 	    }

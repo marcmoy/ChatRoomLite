@@ -12,6 +12,7 @@ class Chat extends React.Component {
     this.bindSocketListeners = this.bindSocketListeners.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.sendGIF = this.sendGIF.bind(this);
     this.width = $(window).width();
   }
 
@@ -63,8 +64,7 @@ class Chat extends React.Component {
     if (this.width > 420) return;
     if (message === '') {
       $('.send-button').animate(
-        { width: '0', padding: '0', color: 'transparent'}
-      , 300);
+        { width: '0', padding: '0', color: 'transparent'} , 300);
     } else {
       $('.send-button').animate(
         { width: '60px', padding: '6px 12px', color: 'white'}
@@ -77,9 +77,16 @@ class Chat extends React.Component {
     if (this.state.message.replace(/\s/g, '').length) {
       this.props.socket.emit('send message', this.state.message);
       this.setState({ message: '' });
+      $('.send-button').animate(
+        { width: '0', padding: '0', color: 'transparent'} , 300);
     }
   }
 
+  sendGIF(e) {
+    e.preventDefault();
+    this.props.socket.emit('send message', e.target.src);
+  }
+  
   render() {
     return(
       <div id="messageArea">
@@ -98,7 +105,7 @@ class Chat extends React.Component {
                 id="message" onChange={this.updateMessage}
                 value={this.state.message}></input>
               <EmojiInput updateMessage={this.updateMessage}/>
-              <GIFInput />
+              <GIFInput sendGIF={this.sendGIF} closeGIF={this.closeGIF}/>
               <button className='btn btn-primary send-button'
                 onClick={this.sendMessage}>
                 Send

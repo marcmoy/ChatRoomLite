@@ -30,6 +30,7 @@ class EmojiInput extends React.Component {
     $('left-side').on('click', () => this.setState({showEmojiPicker: false}));
     $('#chat').on('click', () => this.setState({showEmojiPicker: false}));
     $('.gif-button').on('click', () => this.setState({showEmojiPicker: false}));
+    $('#message').focus(() => this.setState({showEmojiPicker: false}));
   }
 
   toggleEmojiPicker(e){
