@@ -51150,7 +51150,14 @@
 	      if (this.state.message.replace(/\s/g, '').length) {
 	        this.props.socket.emit('send message', this.state.message);
 	        this.setState({ message: '' });
-	        (0, _jquery2.default)('.send-button').animate({ width: '0', padding: '0', color: 'transparent' }, 300);
+	        (0, _jquery2.default)('.send-button').animate({
+	          width: '0',
+	          padding: '0',
+	          color: 'transparent'
+	        }, 300);
+	        if (this.state.users.length === 1) {
+	          this.props.socket.emit('random message');
+	        }
 	      }
 	    }
 	  }, {

@@ -78,7 +78,14 @@ class Chat extends React.Component {
       this.props.socket.emit('send message', this.state.message);
       this.setState({ message: '' });
       $('.send-button').animate(
-        { width: '0', padding: '0', color: 'transparent'} , 300);
+        {
+          width: '0',
+          padding: '0',
+          color: 'transparent'
+        } , 300);
+      if (this.state.users.length === 1) {
+        this.props.socket.emit('random message');
+      }
     }
   }
 

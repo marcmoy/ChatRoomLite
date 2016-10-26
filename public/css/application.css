@@ -32,7 +32,6 @@
   background-color: white;
   border-radius: 2rem;
   padding: 2rem 4rem;
-  height: 50vh;
   white-space: nowrap;
   text-align: center;
   justify-content: center;
@@ -236,6 +235,7 @@ ul#users > li > img#avatar {
 }
 
 .speech-bubble {
+  font-size: 1.5em;
   padding: 1rem;
   margin: 1.5rem 0;
   border-radius: 1rem;
@@ -276,6 +276,7 @@ ul#users > li > img#avatar {
 }
 
 .speech-bubble-owner {
+  font-size: 1.5em;
   padding: 1rem;
   margin: 1.5rem 0;
   border-radius: 1rem;
