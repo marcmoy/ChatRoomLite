@@ -73047,7 +73047,12 @@
 	        return console.log(data);
 	      };
 	
-	      (0, _gif_api.fetchGIFS)(query, success, error);
+	      // ensures that app waits until the user finishes typing...
+	      clearTimeout(this.timeout);
+	      // fetch gifs afer 0.8 seconds of no typing...
+	      this.timeout = setTimeout(function () {
+	        (0, _gif_api.fetchGIFS)(query, success, error);
+	      }, 800);
 	    }
 	  }, {
 	    key: 'gifPicker',

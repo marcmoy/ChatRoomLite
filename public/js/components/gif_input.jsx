@@ -59,7 +59,12 @@ class GIFInput extends React.Component {
     let success = result => this.updateGifs(result);
     let error = data => console.log(data);
 
-    fetchGIFS(query, success, error);
+    // ensures that app waits until the user finishes typing...
+    clearTimeout(this.timeout);
+    // fetch gifs afer 0.8 seconds of no typing...
+    this.timeout = setTimeout(() => {
+      fetchGIFS(query, success, error);
+    }, 800);
   }
 
   gifPicker() {
